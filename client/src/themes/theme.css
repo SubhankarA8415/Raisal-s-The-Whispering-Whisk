@@ -1,0 +1,162 @@
+/* =========================================================
+   RAISAL'S THE WHISPERING WHISK — THEME SYSTEM
+
+   "warm" (default)  -> premium artisan-bakery editorial palette:
+                        ivory / oat / almond / cocoa, restrained
+                        berry accent. Never pure white.
+   "cocoa" (dark)     -> luxury chocolate cafe after dark:
+                        espresso / bittersweet cocoa / mocha,
+                        warm caramel-gold accents. Never pure black.
+   ========================================================= */
+
+:root {
+  /* Backgrounds - tonal layering: page sits slightly deeper than
+     the surfaces/cards that float on top of it. */
+  --color-background: #f4eadc;
+  --color-background-alt: #ead8c3;
+  --color-surface: #fff8ef;
+
+  /* Brand */
+  --color-primary: #6b3628;
+  --color-secondary: #c07a68;
+  --color-accent: #d9a15b;
+  --color-accent-foreground: #3a2318;
+
+  /* Text */
+  --color-text: #3a2620;
+  --color-text-muted: #8a6f60;
+
+  /* Borders */
+  --color-border: #e7d7bf;
+
+  /* Vegetarian identity */
+  --color-veg: #3f7d45;
+  --color-veg-text: #315f36;
+  --color-veg-surface: #f0f6ec;
+  --color-veg-border: #b9d6ba;
+
+  /* Effects */
+  --shadow-soft: 0 12px 34px rgba(58, 38, 32, 0.09);
+  --shadow-hover: 0 24px 58px rgba(58, 38, 32, 0.15);
+  --shadow-focus: 0 0 0 4px rgba(107, 54, 40, 0.12);
+  --shadow-lift: 0 2px 0 rgba(255, 255, 255, 0.35) inset, 0 10px 22px rgba(58, 38, 32, 0.14);
+
+  /* Tone used by decorative accents only (dividers, ornaments) */
+  --color-hairline: color-mix(in srgb, var(--color-primary) 22%, var(--color-border));
+
+  /* Radius */
+  --radius-card: 1.25rem;
+  --radius-button: 12px;
+}
+
+[data-theme='cocoa'] {
+  /* Backgrounds */
+  --color-background: #221410;
+  --color-background-alt: #2a1a14;
+  --color-surface: #2f1d17;
+
+  /* Brand */
+  --color-primary: #e0a868;
+  --color-secondary: #dd9a76;
+  --color-accent: #eec488;
+  --color-accent-foreground: #33200f;
+
+  /* Text */
+  --color-text: #f5e8db;
+  --color-text-muted: #c9ab97;
+
+  /* Borders */
+  --color-border: #4c3527;
+
+  /* Vegetarian identity */
+  --color-veg: #86c489;
+  --color-veg-text: #d7efd8;
+  --color-veg-surface: #26382a;
+  --color-veg-border: #456a48;
+
+  /* Effects */
+  --shadow-soft: 0 12px 34px rgba(0, 0, 0, 0.32);
+  --shadow-hover: 0 26px 64px rgba(0, 0, 0, 0.44);
+  --shadow-focus: 0 0 0 4px rgba(224, 168, 104, 0.18);
+  --shadow-lift: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 12px 26px rgba(0, 0, 0, 0.4);
+
+  --color-hairline: color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
+
+  /* Radius */
+  --radius-card: 1.25rem;
+  --radius-button: 12px;
+}
+
+
+/* =========================================================
+   FINAL ART-DIRECTION POLISH
+   Visual-only enhancement layer — functionality unchanged.
+   ========================================================= */
+
+:root {
+  --shadow-soft:
+    0 10px 30px color-mix(in srgb, var(--color-primary) 8%, transparent);
+  --shadow-card:
+    0 14px 38px color-mix(in srgb, var(--color-primary) 10%, transparent);
+  --shadow-lift:
+    0 20px 46px color-mix(in srgb, var(--color-primary) 14%, transparent);
+  --ring-soft:
+    0 0 0 4px color-mix(in srgb, var(--color-accent) 16%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  color: var(--color-text);
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  outline-offset: 3px;
+}
+
+.bakery-card {
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 280ms cubic-bezier(.2,.75,.25,1),
+    box-shadow 280ms cubic-bezier(.2,.75,.25,1),
+    border-color 280ms ease,
+    background-color 280ms ease;
+}
+
+.bakery-card:hover {
+  box-shadow: var(--shadow-card);
+  border-color: color-mix(in srgb, var(--color-accent) 28%, var(--color-border));
+}
+
+button:not(:disabled),
+a[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bakery-card:hover {
+    transform: translateY(-2px);
+  }
+
+  button:not(:disabled):hover,
+  a[role="button"]:hover {
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .bakery-card,
+  button,
+  a[role="button"] {
+    transition: none !important;
+    transform: none !important;
+  }
+}

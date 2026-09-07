@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Karla:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@import "./themes/theme.css";
+
+@theme {
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Karla', Arial, Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  background-color: var(--color-background);
+  background-image:
+    radial-gradient(circle at 8% 4%, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 26rem),
+    radial-gradient(circle at 94% 22%, color-mix(in srgb, var(--color-secondary) 8%, transparent), transparent 24rem),
+    radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--color-primary) 5%, transparent), transparent 30rem);
+  background-attachment: fixed;
+  color: var(--color-text);
+  font-family: 'Karla', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 450ms var(--ease-smooth), color 450ms var(--ease-smooth);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: 'Fraunces', Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p { margin: 0; }
+button, input, textarea, select { font: inherit; }
+select option { background-color: var(--color-surface); color: var(--color-text); }
+button { cursor: pointer; }
+img, video { display: block; max-width: 100%; }
+
+a, button { -webkit-tap-highlight-color: transparent; }
+
+::selection { background: var(--color-accent); color: var(--color-accent-foreground); }
+
+:root {
+  --motion-fast: 180ms;
+  --motion-base: 320ms;
+  --motion-slow: 700ms;
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { scrollbar-gutter: stable; }
+
+/* Subtle brand texture without affecting layout or content. */
+.section-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.section-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent) 4%, transparent), transparent);
+  opacity: 0.7;
+}
+
+/* Alternating tonal surface for sections that opt in — purely decorative. */
+.section-tonal {
+  background-color: color-mix(in srgb, var(--color-background-alt) 65%, var(--color-background));
+}
+
+.bakery-card {
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform var(--motion-base) var(--ease-smooth),
+    box-shadow var(--motion-base) var(--ease-smooth),
+    border-color var(--motion-base) var(--ease-smooth);
+}
+
+.bakery-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: color-mix(in srgb, var(--color-primary) 26%, var(--color-border));
+}
+
+.bakery-media-frame {
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--color-accent) 14%, transparent), transparent 44%),
+    var(--color-background);
+}
+
+/* Small ornamental accent used beside eyebrow labels and section dividers. */
+.ornament-dot {
+  display: inline-flex;
+  height: 0.32rem;
+  width: 0.32rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  flex: none;
+}
+
+.ornament-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.ornament-line::before,
+.ornament-line::after {
+  content: '';
+  height: 1px;
+  width: 1.75rem;
+  background: linear-gradient(90deg, transparent, var(--color-hairline), transparent);
+  flex: none;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--motion-slow) var(--ease-smooth), transform var(--motion-slow) var(--ease-smooth);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-visible { opacity: 1; transform: translateY(0); }
+.reveal-left { transform: translateX(-32px); }
+.reveal-right { transform: translateX(32px); }
+.reveal-scale { transform: scale(0.96); }
+.reveal-visible.reveal-left, .reveal-visible.reveal-right, .reveal-visible.reveal-scale { transform: translate(0) scale(1); }
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-9px) rotate(0.35deg); }
+}
+
+@keyframes softPulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes placeholderShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes gentleSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.hero-media-float { animation: heroFloat 5s ease-in-out infinite; }
+
+.placeholder-shimmer {
+  background-image: linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.08) 45%, transparent 70%);
+  background-size: 220% 100%;
+  animation: placeholderShimmer 2.8s linear infinite;
+}
+
+[data-theme='warm'] .placeholder-shimmer {
+  background-image: linear-gradient(110deg, transparent 20%, rgba(122,64,50,0.06) 45%, transparent 70%);
+}
+
+.float-badge { animation: softPulse 3s ease-in-out infinite; }
+
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+input, textarea, select {
+  transition: border-color var(--motion-fast) var(--ease-smooth), box-shadow var(--motion-fast) var(--ease-smooth), background-color var(--motion-fast) var(--ease-smooth);
+}
+
+input:focus, textarea:focus, select:focus {
+  box-shadow: var(--shadow-focus);
+}
+
+img, video {
+  transition: transform var(--motion-base) var(--ease-smooth), opacity var(--motion-base) var(--ease-smooth);
+}
+
+@keyframes errorProgress { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-text);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-background) inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; }
+}
+
+
+/* =========================================================
+   FINAL ART-DIRECTION POLISH
+   Visual-only enhancement layer — functionality unchanged.
+   ========================================================= */
+
+:root {
+  --shadow-soft:
+    0 10px 30px color-mix(in srgb, var(--color-primary) 8%, transparent);
+  --shadow-card:
+    0 14px 38px color-mix(in srgb, var(--color-primary) 10%, transparent);
+  --shadow-lift:
+    0 20px 46px color-mix(in srgb, var(--color-primary) 14%, transparent);
+  --ring-soft:
+    0 0 0 4px color-mix(in srgb, var(--color-accent) 16%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  color: var(--color-text);
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  outline-offset: 3px;
+}
+
+.bakery-card {
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 280ms cubic-bezier(.2,.75,.25,1),
+    box-shadow 280ms cubic-bezier(.2,.75,.25,1),
+    border-color 280ms ease,
+    background-color 280ms ease;
+}
+
+.bakery-card:hover {
+  box-shadow: var(--shadow-card);
+  border-color: color-mix(in srgb, var(--color-accent) 28%, var(--color-border));
+}
+
+button:not(:disabled),
+a[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bakery-card:hover {
+    transform: translateY(-2px);
+  }
+
+  button:not(:disabled):hover,
+  a[role="button"]:hover {
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .bakery-card,
+  button,
+  a[role="button"] {
+    transition: none !important;
+    transform: none !important;
+  }
+}
